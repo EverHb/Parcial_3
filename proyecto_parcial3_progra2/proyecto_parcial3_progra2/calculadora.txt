@@ -1,0 +1,72 @@
+using System;
+
+class calculadora 
+{
+    static void Main()
+    {
+        int[] opciones = { 1, 2, 3, 4 };
+
+        try
+        {
+            Console.Write("Ingrese la opción deseada (1-4): ");
+            int opcion = int.Parse(Console.ReadLine());
+
+            if (Array.IndexOf(opciones, opcion) == -1)
+            {
+                throw new ArgumentException("Opción no válida");
+            }
+
+            Console.Write("Ingrese el primer número: ");
+            int num1 = int.Parse(Console.ReadLine());
+
+            Console.Write("Ingrese el segundo número: ");
+            int num2 = int.Parse(Console.ReadLine());
+
+            switch (opcion)
+            {
+                case 1:
+                    MostrarResultado(num1 + num2);
+                    break;
+                case 2:
+                    MostrarResultado(num1 - num2);
+                    break;
+                case 3:
+                    MostrarResultado(num1 * num2);
+                    break;
+                case 4:
+                    if (num2 == 0)
+                    {
+                        throw new ArgumentException("No se puede dividir por cero");
+                    }
+                    MostrarResultado(num1 / num2);
+                    break;
+            }
+        }
+        catch (FormatException)
+        {
+            MostrarError("Error de formato. Ingrese un número válido.");
+        }
+        catch (ArgumentException ex)
+        {
+            MostrarError($"Error: {ex.Message}");
+        }
+        catch (DivideByZeroException)
+        {
+            MostrarError("Error: No se puede dividir por cero.");
+        }
+        catch (Exception ex)
+        {
+            MostrarError($"Error inesperado: {ex.Message}");
+        }
+    }
+
+    static void MostrarResultado(int resultado)
+    {
+        Console.WriteLine($"Resultado: {resultado}");
+    }
+
+    static void MostrarError(string mensaje)
+    {
+        Console.WriteLine(mensaje);
+    }
+}
